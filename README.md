@@ -2,6 +2,8 @@
 This project is a simple Todo App built with Supabase as the backend database.
 It does not use RLS (Row Level Security), so only the anon key is required for database access.
 
+Demo: [https://todo-nextjs-sand.vercel.app/](https://todo-nextjs-sand.vercel.app/)
+
 ## Tech Stack
 - [Next.js](https://nextjs.org/) – Frontend framework
 - [Supabase](https://supabase.com/) – Backend database & API
