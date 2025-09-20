@@ -1,6 +1,8 @@
 import TodoList from "@/components/todoList";
 import { getTodos } from "@/lib/supabaseTD";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const initialTodos = await getTodos({sortHighToLow: true});
   return (
