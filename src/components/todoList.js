@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import TodoCard from "./todoCard";
 import TodoModal from "./todoModal";
 import { getTodos, getUniqueTags, supabase } from "@/lib/supabaseTD";
@@ -18,14 +18,14 @@ const TodoList = ({ initialData }) => {
   const [searchTags, setSearchTags] = useState([]);
   const [sortHighToLow, setSortHighToLow] = useState(true);
 
-  const fetchTodos = async () => {
+  const fetchTodos = useCallback(async () => {
     const data = await getTodos({
       searchTitle,
       searchTags,
       sortHighToLow,
     });
     setTodos(data);
-  };
+  }, [searchTitle, searchTags, sortHighToLow]);
 
   const handleSuccess = () => {
     fetchTodos();
@@ -37,7 +37,7 @@ const TodoList = ({ initialData }) => {
     );
   };
 
-  useEffect(() => {
+ useEffect(() => {
     const channel = supabase
       .channel("todoTabel-realtime")
       .on(
@@ -52,7 +52,7 @@ const TodoList = ({ initialData }) => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [searchTitle, searchTags, sortHighToLow]);
+  }, [fetchTodos]);
 
   useEffect(() => {
     async function fetchTags() {

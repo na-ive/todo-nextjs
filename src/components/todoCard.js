@@ -10,9 +10,10 @@ const TodoCard = ({ data, edit, onSuccess }) => {
   const [priority, setPriority] = React.useState("");
   const [tags, setTags] = React.useState([]);
 
-  const completedHandler = async (id, is_completed) => {
+  const completedHandler = async (id, newStatus) => {
     try {
-      await updateTodoCompleted(id, !is_completed);
+      await updateTodoCompleted(id, newStatus);
+      // Memanggil fungsi dari induk untuk me-refresh semua data
       onSuccess();
     } catch (error) {
       console.error("Update completed status error:", error);
@@ -89,8 +90,8 @@ const TodoCard = ({ data, edit, onSuccess }) => {
               <h1 className="text-lg sm:text-2xl">{todoTitle}</h1>
               <input
                 type="checkbox"
-                defaultChecked={is_completed}
-                onChange={() => completedHandler(todoId, is_completed)}
+                checked={is_completed}
+                onChange={(event) => completedHandler(todoId, event.target.checked)}
                 className="checkbox checkbox-xl"
               />
             </div>
